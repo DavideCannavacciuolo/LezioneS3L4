@@ -1,0 +1,35 @@
+Questo codice contiene tre librerie:
+1.'socket':il processo che permette lo scambio di pacchetti o dati tra due computer.
+2.'platform' : per ottenere informazioni sul sistema operativo.
+3.'os' : per eseguire operazioni di sistema come elencare file in una cartella.
+
+La prima parte del codice è simile a quella vista oggi in classe con le costanti iniziali 'SRV_ADDR' e 'SRV_PORT' che corrispondono a indirizzo IP del server(in questo caso vuoto,quindi ascolterà su tutte le reti disponibili) e il numero della porta su cui il server sarà in ascolto.
+
+Quindi viene creato un nuovo socket 's' con le varie configurazioni tra cui:
+1.'socket.AF:INET' : specifica che vogliamo uno scambio di dati su protocollo IPv4.
+2.'socket.SOCK_STREAM : specifica che vogliamo una connessione su protocollo TCP.
+3.'s.setsockopt' : si utilizza quando si desidera riutilizzare un indirizzo locale usato precedentemente da un altro socket.
+4.'s.bind' : associa l'oggetto socket appena creato all'indirizzo e alla porta.
+5.'s.listen' : metterà in ascolto l'oggetto socket accettando una connessione per volta come specificato nel valore tra parentesi ().
+6.'s.accept' : per accettare la connessione in entrata e l'indirizzo del client.
+
+La seconda parte del codice è costituita da un grande ciclo while che gestisce tutti gli input e le richieste del client:
+1.'connection.recv' : è una funzione che riceve i messaggi o dati inviati  dal client e specificando tra parentesi il limite di caratteri.
+2.'data.decode('utf-8).strip()' : serve per decodificare i dati ricevuti. 'utf-8' infatti è il tipo di codifica di dati utilizzata formata da una sequenza di byte variabile.
+
+In base all'input del client,quindi, sarà risposto con informazioni specifiche:
+1.'Comando 1' : invia informazioni sul sistema operativo e hardware.
+2.'Comando 2' : chiede al client di inviare un path e restituisce una lista ordinata dei file presenti in quel percorso(join(sorted(filelist))).
+3.'Comando 0' : chiude la connessione corrente aprendone una nouva.
+4.'Comando 9' : chiude il server.
+
+Se non si trova connessione la connessione si chiude.(s.close)
+
+BACKDOOR
+
+Backdoor(porta sul retro) è una serie di codici e comandi che consentono di accedere e bypassare un software o un sistema informatico,in genere conosciuti solo dal programmatore che li usa in casi di emergenza.
+
+In questo codice le varie backdoor sembrano concentrarsi nel ciclo while:
+1.'except:continue' : non vengono specificate le varie eccezioni.
+2.'Comando 9' : questo comando forse può essere usato anche se il sever si chiude?! Forse in modo malevolo
+3.'Comando 2' : forse la parte di codice più a favore di un'entrata per far male. Poiche all'invio di un path abbiamo accesso ai file che si trovano in quel percorso. E se ci fossero file con passkey username ecc? Sarebbe l'inizio della fine... :)
